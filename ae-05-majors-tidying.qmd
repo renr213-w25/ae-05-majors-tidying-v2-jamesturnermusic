@@ -1,5 +1,8 @@
 ---
 title: "AE 05: Tidying StatSci Majors"
+author: "James Turner"
+date: today
+format: html
 ---
 
 ## Goal
@@ -33,22 +36,25 @@ statsci
 
 ```{r}
 #| label: pivot
-
-# add your code here
+statsci_pivot <- statsci |>
+  pivot_longer(!degree, names_to = "year", values_to = "num_graduates", cols_vary = "fastest")
   
-  
+statsci_pivot
 ```
 
 -   **Question:** What is the type of the `year` variable? Why? What should it be?
 
-*Add your response here.*
+***Answer:*** The year variable is a character type because as the original titles of the columns they did not have any numerical value. I would argue that these likely should remain characters in most situations since the years are not numerical values that we would perform math on for example. Switching them to numerical values may allow for multiplication of a number by its year, but the output of that would likely make no sense from a practical perspective. However, there are some situations where its numerical value would be important (such as wanting to plot data points on a line plot with the year values on one axis like as the one we will be recreating in this assignment). So in this case we need to make it a numerical variable.
 
 -   **Demo:** Start over with pivoting, and this time also make sure `year` is a numerical variable in the resulting data frame.
 
 ```{r}
 #| label: pivot-with-transform
 
-# add your code here
+statsci_pivot_num <- statsci |>
+  pivot_longer(!degree, names_to = "year", names_transform = list(year= as.integer), values_to = "num_graduates", cols_vary = "fastest")
+  
+statsci_pivot_num
 ```
 
 -   **Question:** What does an `NA` mean in this context? *Hint:* The data come from the university registrar, and they have records on every single graduates, there shouldn't be anything "unknown" to them about who graduated when.
@@ -93,7 +99,6 @@ statsci
 
 ```{r}
 #| label: plot-improve-1
-# add your code here
 
 ```
 
